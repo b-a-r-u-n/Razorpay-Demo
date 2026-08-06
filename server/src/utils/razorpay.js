@@ -46,6 +46,9 @@ const getRazorpayPaymentDetails = async (razorpayPaymentId) => {
 
         const paymentDetails = await instance.payments.fetch(razorpayPaymentId)
 
+        console.log(paymentDetails);
+        
+
         return paymentDetails;
     } catch (error) {
         throw new apiError(
@@ -55,4 +58,20 @@ const getRazorpayPaymentDetails = async (razorpayPaymentId) => {
     }
 }
 
-export { createRazorpay, verifyRazorpay, getRazorpayPaymentDetails };
+const verifyWebhook = async (body, headers) => {
+
+    const receivedSignature = headers["x-razorpay-signature"];
+
+    const generatedSignature = crypto
+        .createHmac("sha256", process.env.RAZORPAY_WEBHOOK_SECRET)
+        .update(body)
+        .digest("hex");
+
+    return receivedSignature === generatedSignature;
+
+    // if (receivedSignature !== generatedSignature) {
+    //     throw new apiError(400, "Invalid webhook signature");
+    // }
+}
+
+export { createRazorpay, verifyRazorpay, getRazorpayPaymentDetails, verifyWebhook };

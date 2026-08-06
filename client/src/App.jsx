@@ -44,6 +44,7 @@ function App() {
         alert('Razropay failed to load!!')
         return
       }
+      
 
       const orderData = await axios.post(`${import.meta.env.VITE_BASE_URL}/order/`, userData)
       // console.log(res);
@@ -60,7 +61,7 @@ function App() {
 
 
       const options = {
-        "key": meta.env.VITE_BASE_RAZORPAY_API_KEY, // Enter the Key ID generated from the Dashboard
+        "key": import.meta.env.VITE_BASE_RAZORPAY_API_KEY, // Enter the Key ID generated from the Dashboard
         "amount": data.data.data.razorpayOrder.amount, // Amount is in currency subunits. 
         "currency": data.data.data.razorpayOrder.currency,
         "name": "STYQLO",
@@ -75,6 +76,9 @@ function App() {
             razorpay_payment_id: response.razorpay_payment_id,
             razorpay_signature: response.razorpay_signature,
           })
+
+          console.log(response);
+          
 
           console.log(verify);
           

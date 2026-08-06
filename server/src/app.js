@@ -6,8 +6,15 @@ const app = express();
 app.use(cors({
     origin: process.env.ORIGIN,
     credentials: true,
-    origin: true
+    // origin: true
 }))
+
+
+// Register ONLY the webhook with raw body
+app.use(
+    "/api/v1/payment/webhook",
+    express.raw({ type: "application/json" })
+);
 
 app.use(express.json({limit: "16kb"}));
 app.use(express.urlencoded({

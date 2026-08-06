@@ -19,10 +19,6 @@ const paymentSchema = new mongoose.Schema(
             type: String,
             default: null
         },
-        razorpaySignature: {
-            type: String,
-            default: null
-        },
         amount: {
             type: Number,
             required: true
